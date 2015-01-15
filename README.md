@@ -15,18 +15,18 @@ Mobile phones penetration in Rural India is increasing comparable to TV & Radios
 
 Constraints
 
--You will have 100 videos of each 3-8MB roughly (in total say about 500MB)
--In addition, 1000s of rich text content like Weather info, Commodities info, Educational info
--Phones have sporadic Data connection, may have 1 to 4 hrs of connectivity every day
--Data Speed (2G) is assumed to be in the range of 22 to 80 Kbps (average: ~56Kbps)
--Maximum Data storage available on phone will be 256 MB
+* You will have 100 videos of each 3-8MB roughly (in total say about 500MB)
+* In addition, 1000s of rich text content like Weather info, Commodities info, Educational info
+* Phones have sporadic Data connection, may have 1 to 4 hrs of connectivity every day
+* Data Speed (2G) is assumed to be in the range of 22 to 80 Kbps (average: ~56Kbps)
+* Maximum Data storage available on phone will be 256 MB
 
 
 Evaluation Criteria
 
--Fully Database searchable with rich experience offline
--Relevant content made available offline, Maximum search hits during offline.
--System should have offline Learning capability and it should benefit the entire user-base
--Any innovative ideas using phone capabilities like Bluetooth or any other way to optimise data-usage.
+* Fully Database searchable with rich experience offline
+* Relevant content made available offline, Maximum search hits during offline.
+* System should have offline Learning capability and it should benefit the entire user-base
+* Any innovative ideas using phone capabilities like Bluetooth or any other way to optimise data-usage.
 
 PS: This can be simulated on stand-alone or web-app, not necessary to showcase as an Android app, it left to the Student's ability.
