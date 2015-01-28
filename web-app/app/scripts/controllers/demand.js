@@ -2,19 +2,16 @@
 
 /**
  * @ngdoc function
- * @name villagerHelpApp.controller:MainCtrl
+ * @name villagerHelpApp.controller:DemandCtrl
  * @description
- * # MainCtrl
+ * # DemandCtrl
  * Controller of the villagerHelpApp
  */
 angular.module('villagerHelpApp')
-  .controller('MainCtrl', function ($scope) {
+  .controller('DemandCtrl', function ($scope) {
     $scope.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',
       'Karma'
     ];
-    $scope.isActive = function (viewLocation) { 
-		return viewLocation === $location.path();
-    };
   });

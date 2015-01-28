@@ -29,6 +29,18 @@ angular
         templateUrl: 'views/about.html',
         controller: 'AboutCtrl'
       })
+      .when('/demand', {
+        templateUrl: 'views/demand.html',
+        controller: 'DemandCtrl'
+      })
+      .when('/browse', {
+        templateUrl: 'views/browse.html',
+        controller: 'BrowseCtrl'
+      })
+      .when('/search', {
+        templateUrl: 'views/search.html',
+        controller: 'SearchCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
