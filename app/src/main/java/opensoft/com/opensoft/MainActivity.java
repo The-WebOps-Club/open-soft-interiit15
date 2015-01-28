@@ -1,5 +1,7 @@
 package opensoft.com.opensoft;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.Fragment;
@@ -322,6 +324,35 @@ public class MainActivity extends ActionBarActivity {
             recyclerView.addItemDecoration(dragSortRecycler);
             recyclerView.addOnItemTouchListener(dragSortRecycler);
             recyclerView.setOnScrollListener(dragSortRecycler.getScrollListener());
+            Button addDemand=(Button) rootView.findViewById(R.id.demand_add);
+            addDemand.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AlertDialog.Builder alert = new AlertDialog.Builder(rootView.getContext());
+
+                    alert.setTitle("Add Demand");
+
+// Set an EditText view to get user input
+                    final EditText input = new EditText(rootView.getContext());
+                    alert.setView(input);
+
+                    alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            String value = input.getText().toString();
+                            System.out.println(value);
+                            // Do something with value!
+                        }
+                    });
+
+                    alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            // Canceled.
+                        }
+                    });
+
+                    alert.show();
+                }
+            });
             return rootView;
         }
     }
