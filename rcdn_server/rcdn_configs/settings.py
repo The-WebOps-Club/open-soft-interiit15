@@ -37,7 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'data',
+    'data'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -60,10 +60,8 @@ WSGI_APPLICATION = 'rcdn_configs.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'rcdn',
-        'USER': 'root',
-        'PASSWORD': 'omega',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'rcdn'
     }
 }
 
