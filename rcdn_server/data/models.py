@@ -44,6 +44,20 @@ class ProtobufField(BlobField):
         obj = obj.SerializeToString()
         return super(ProtobufField, self).value_to_string(obj)
 
-
 class Page(models.Model):
-    data =  ProtobufField(protoclass=wikipage_pb2) 
+    timestamp   = models.DateTimeField(auto_now_add = True)
+    data        =  ProtobufField(protoclass=wikipage_pb2) 
+
+from django.contrib.auth.models import User
+
+class UserProfile(models.Model):
+    user            = models.OneToOneField(User)
+    phone           = models.CharField(max_length=10, blank=True, null=True)
+    occupation      = models.CharField(max_length=10, blank=True, null=True)
+    region          = models.CharField(max_length=10, blank=True, null=True)
+    priority_list   = models.CharField(max_length=10, blank=True, null=True)
+    last_synced     = models.DateTimeField(blank=True, null=True)
+    data_size       = models.IntegerField(blank=True, null=True)
+
+    def __unicode__(self):
+        return "%s's profile" % self.user.get_full_name()
