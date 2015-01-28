@@ -13,6 +13,8 @@ import android.view.animation.RotateAnimation;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import opensoft.com.opensoft.R;
+
 public class FontAwesomeText extends FrameLayout {
 
 	private TextView tv;

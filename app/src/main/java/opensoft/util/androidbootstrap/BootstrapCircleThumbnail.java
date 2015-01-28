@@ -12,7 +12,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.beardedhen.androidbootstrap.utils.ImageUtils;
+import opensoft.com.opensoft.R;
+import opensoft.util.androidbootstrap.utils.ImageUtils;
+
 
 public class BootstrapCircleThumbnail extends FrameLayout
 {

@@ -2,6 +2,7 @@ package opensoft.com.opensoft;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.Fragment;
@@ -29,8 +30,11 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import org.json.JSONArray;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
 import opensoft.browse.AdapterCardElement;
@@ -39,6 +43,7 @@ import opensoft.search.AdapterListElement;
 import opensoft.search.ListElement;
 import opensoft.util.DragSortRecycler;
 import opensoft.util.SwipeableRecyclerViewTouchListener;
+import opensoft.util.androidbootstrap.BootstrapButton;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -324,14 +329,12 @@ public class MainActivity extends ActionBarActivity {
             recyclerView.addItemDecoration(dragSortRecycler);
             recyclerView.addOnItemTouchListener(dragSortRecycler);
             recyclerView.setOnScrollListener(dragSortRecycler.getScrollListener());
-            Button addDemand=(Button) rootView.findViewById(R.id.demand_add);
+            BootstrapButton addDemand=(BootstrapButton) rootView.findViewById(R.id.demand_add);
             addDemand.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     AlertDialog.Builder alert = new AlertDialog.Builder(rootView.getContext());
-
                     alert.setTitle("Add Demand");
-
 // Set an EditText view to get user input
                     final EditText input = new EditText(rootView.getContext());
                     alert.setView(input);

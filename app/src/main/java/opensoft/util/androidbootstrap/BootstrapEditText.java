@@ -6,6 +6,8 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.widget.EditText;
 
+import opensoft.com.opensoft.R;
+
 public class BootstrapEditText extends EditText {
 
     private enum TextState {

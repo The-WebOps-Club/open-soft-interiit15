@@ -11,6 +11,8 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import opensoft.com.opensoft.R;
+
 public class BootstrapThumbnail extends FrameLayout
 {
 	private static final int DEFAULT_WIDTH = 150; //width of thumbnail when no width is given
