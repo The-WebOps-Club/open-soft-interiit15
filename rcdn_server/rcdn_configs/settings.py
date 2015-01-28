@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
+PROJECT_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__),'..'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
@@ -60,8 +61,10 @@ WSGI_APPLICATION = 'rcdn_configs.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'rcdn'
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'rcdn',
+        'USER': 'root',
+        'PASSWORD': 'omega',
     }
 }
 
@@ -83,3 +86,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
 STATIC_URL = '/static/'
+# Paths for static, media and templates
+STATIC_ROOT = os.path.join(PROJECT_PATH, "files", "static-collected")
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(PROJECT_PATH, "files", "media")
+DATA_ROOT = os.path.join(PROJECT_PATH, "files", "data") # Contains gen data files (used by some manage commands)
+STATICFILES_DIRS = (
+    os.path.join(PROJECT_PATH, "files", "static"), # Remember first element should be the user defined one.
+    # used in management commands
+)

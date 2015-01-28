@@ -1,38 +1,38 @@
-from rcdn_server.data.models import UserProfile
+from data.models import UserProfile
 from django.contrib.auth.models import User
-
-
+from annoying.functions import get_object_or_None
+from django.shortcuts import get_object_or_404, HttpResponse, render_to_response, redirect, HttpResponseRedirect, render
+import json
+from django.views.decorators.csrf import csrf_exempt
+import fetcher as fr
+from django.core.servers.basehttp import FileWrapper
+from django.conf import settings
+@csrf_exempt
 def create_user(request):
     data = request.POST
-    user = User.objects.create_user
-    serialized = UserSerializer(data = request.DATA)
-    # if serialized.is_valid():
-        # user = get_object_or_None(User, username=serialized.init_data['email'])
-    if user:
-        return Response({
-            "user": ["User already exists"]
-        }, status=status.HTTP_400_BAD_REQUEST)
+    try:
+        user = get_object_or_None(User, email=data['email'])
+        if user:
+            return HttpResponse(json.dumps({'result':False,'msg':'User with same email already exist'}))
+        else:
+            user = User.objects.create_user(username=''.join(data['name'].split(' ')).lower(), email=data['email'], password=data['email'], first_name=data['name'])
+            user.save()
+            profile=UserProfile.objects.create(user=user,phone=data['phone'],occupation=data['occupation'],region=data['region'])
+            profile.save()
+            return HttpResponse(json.dumps({'result':True,'username':''.join(data['name'].split(' ')).lower(), 'id':user.pk}))
+    except Exception,e:
+        return HttpResponse(json.dumps({'result':False,'msg':e.message}))
+
+@csrf_exempt
+def get_data(request):
+    data = request.GET
+    if data['format']:
+        sformat = data['format']
+    filename = fr.fetch(data['keyword'],sformat)
+    if filename:
+        return HttpResponseRedirect(settings.MEDIA_URL+filename)
     else:
-        user = User.objects.create_user(
-            serialized.init_data['email'],
-            serialized.init_data['email'],
-            serialized.init_data['password']
-        )
-        user.first_name = serialized.init_data['first_name']
-        user.last_name = serialized.init_data['last_name']
-        user.is_active = True
-        user.save()
-        token = Token.objects.get_or_create(user=user)[0]
-        user = authenticate(username=serialized.init_data['email'], password=serialized.init_data['password'])
-        login(request, user)
-        data = serialized.data
-        data['token'] = token.key
-        data['user_id'] = user.id
-        return Response(data, status=status.HTTP_201_CREATED)
-    # else:
-    #     return Response(serialized._errors, status=status.HTTP_400_BAD_REQUEST)
-    # pass
-def update_user(request):
-    pass
+        return HttpResponse('Error')
+
 def destroy_user(request):
     pass

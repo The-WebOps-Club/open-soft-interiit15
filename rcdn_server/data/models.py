@@ -12,41 +12,13 @@ The field is supposed to store only the given kind of protocol messages.
 The `protoclass` attribute is required.
 '''
 from django.db import models
-from djangotoolbox.fields import BlobField
 
 import wikipage_pb2
 
-class ProtobufField(BlobField):
-    description = "Storage for protobuffer objects"
-    __metaclass__ = models.SubfieldBase
- 
-    def __init__(self, protoclass, *args, **kwargs):
-        self.protoclass = protoclass
-        super(ProtobufField, self).__init__(*args, **kwargs)
- 
-    def to_python(self, value):
-        if isinstance(value, self.protoclass):
-            return value
- 
-        protobuf = self.protoclass()
-        protobuf.ParseFromString(value)
-        return protobuf
- 
-    def get_prep_value(self, value):
-        return value.SerializeToString()
- 
-    def get_db_prep_value(self, value, connection, prepared=False):
-        if hasattr(value, "SerializeToString"):
-            value = value.SerializeToString()
-        return super(ProtobufField, self).get_db_prep_value(value=value, connection=connection, prepared=prepared)
- 
-    def value_to_string(self, obj):
-        obj = obj.SerializeToString()
-        return super(ProtobufField, self).value_to_string(obj)
-
 class Page(models.Model):
     timestamp   = models.DateTimeField(auto_now_add = True)
-    data        =  ProtobufField(protoclass=wikipage_pb2) 
+    title       = models.CharField(max_length=100)
+    filename    = models.FileField()
 
 from django.contrib.auth.models import User
 
@@ -60,4 +32,4 @@ class UserProfile(models.Model):
     data_size       = models.IntegerField(blank=True, null=True)
 
     def __unicode__(self):
-        return "%s's profile" % self.user.get_full_name()
+        return self.user.get_full_name()
