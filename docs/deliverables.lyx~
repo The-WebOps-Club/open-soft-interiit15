@@ -1,0 +1,231 @@
+#LyX 2.1 created this file. For more info see http://www.lyx.org/
+\lyxformat 474
+\begin_document
+\begin_header
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_math auto
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Deliverables for Open Soft
+\end_layout
+
+\begin_layout Author
+IIT MADRAS
+\end_layout
+
+\begin_layout Standard
+Problem has been broadly divided into two parts:
+\end_layout
+
+\begin_layout Itemize
+Server
+\end_layout
+
+\begin_layout Itemize
+Client
+\end_layout
+
+\begin_layout Section
+Server
+\end_layout
+
+\begin_layout Enumerate
+On receiving a GET request
+\end_layout
+
+\begin_layout Enumerate
+On receiving a POST request
+\end_layout
+
+\begin_layout Section
+Client
+\end_layout
+
+\begin_layout Enumerate
+Five basic features:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Search
+\end_layout
+
+\begin_layout Enumerate
+Browse
+\end_layout
+
+\begin_layout Enumerate
+Pin
+\end_layout
+
+\begin_layout Enumerate
+Demand
+\end_layout
+
+\begin_layout Enumerate
+Share
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+Search
+\series default
+: 
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Enables the user to search through all the content present in the phone.
+\end_layout
+
+\begin_layout Enumerate
+In case it's not found the user can 
+\shape italic
+demand
+\shape default
+ that particular item.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+Browse
+\series default
+: 
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Enables the user to go through all the content present in the phone.
+ 
+\end_layout
+
+\begin_layout Enumerate
+The content shall be categorised into news, occupational information and
+ tutorial-videos.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+Pin: 
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Enables the user to permanently save any content, which means that it won't
+ be removed by any background process.
+\end_layout
+
+\begin_layout Enumerate
+It can be removed if the user 
+\shape italic
+unpins
+\shape default
+ it.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+Demand
+\series default
+: 
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Enables the user to demand for a content which is not currently present
+ in his phone.
+\end_layout
+
+\begin_layout Enumerate
+User can also see the status of all demands made in the past.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\series bold
+Share
+\series default
+: 
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Enables the user to share a content present in his phone with his neighbours/fri
+ends using Bluetooth or WiFi.
+\end_layout
+
+\end_deeper
+\end_body
+\end_document
