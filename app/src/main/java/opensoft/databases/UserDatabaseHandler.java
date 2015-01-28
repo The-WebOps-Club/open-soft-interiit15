@@ -118,7 +118,6 @@ public class UserDatabaseHandler extends SQLiteOpenHelper {
             cursor.moveToFirst();
 
         User user = new User();
-        if(cursor.)
         user.setiLocalId(cursor.getInt(0));
         user.setiServerId(cursor.getInt(1));
         user.setsName(cursor.getString(2));
