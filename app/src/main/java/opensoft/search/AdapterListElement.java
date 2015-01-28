@@ -56,6 +56,7 @@ public class AdapterListElement extends RecyclerView.Adapter<AdapterListElement.
             viewHolder.txtTitle.setText(model.title);
             viewHolder.txtInfo.setText(model.info);
             viewHolder.imgViewIcon.setImageResource(R.drawable.ic_launcher);
+            viewHolder.id=model.id;
         }
 
         @Override
@@ -72,7 +73,7 @@ public class AdapterListElement extends RecyclerView.Adapter<AdapterListElement.
             ImageView imgViewIcon;
             TextView txtTitle;
             TextView txtInfo;
-
+            int id;
             public ListElement currentItem;
 
             public ListItemViewHolder(final View itemView) {
@@ -85,7 +86,7 @@ public class AdapterListElement extends RecyclerView.Adapter<AdapterListElement.
                     public void onClick(View view) {
                         FragmentManager fragmentManager = ((ActionBarActivity)c).getSupportFragmentManager();
                         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                        fragmentTransaction.replace(R.id.frame_container, new MainActivity.ShowDataFragment());
+                        fragmentTransaction.replace(R.id.frame_container, new MainActivity.ShowDataFragment(currentItem.id));
                         ((ActionBarActivity)c).getSupportActionBar().setTitle("Browse");
                         fragmentTransaction.commit();
                     }

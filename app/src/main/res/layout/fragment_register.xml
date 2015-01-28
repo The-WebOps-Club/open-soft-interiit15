@@ -1,0 +1,103 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context=".Register$PlaceholderFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_centerVertical="true"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+    <TextView android:id="@+id/txt_name"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Name : "
+        android:textSize="22sp"/>
+
+    <EditText
+        android:id="@+id/edit_name"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView android:id="@+id/txt_phone"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Phone : "
+            android:textSize="22sp"/>
+
+        <EditText
+            android:id="@+id/edit_phone"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView android:id="@+id/txt_email"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Email : "
+            android:textSize="22sp"/>
+
+        <EditText
+            android:id="@+id/edit_email"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView android:id="@+id/txt_occupation"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Occupation : "
+            android:textSize="22sp"/>
+
+        <EditText
+            android:id="@+id/edit_occupation"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView android:id="@+id/txt_place"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Region/Place : "
+            android:textSize="22sp"/>
+
+        <EditText
+            android:id="@+id/edit_place"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Submit"
+        android:id="@+id/but_register"/>
+    </LinearLayout>
+  </RelativeLayout>
