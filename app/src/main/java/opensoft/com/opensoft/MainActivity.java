@@ -4,8 +4,6 @@ import android.app.Fragment;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.support.v4.app.FragmentManager;
-import android.content.res.TypedArray;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
@@ -13,7 +11,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.internal.widget.AdapterViewCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -25,12 +22,20 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+<<<<<<< HEAD
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+=======
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+>>>>>>> db746e28b1bb1bdfc7d741925fb3676740a4e0b8
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -42,12 +47,13 @@ import opensoft.browse.AdapterCardElement;
 import opensoft.browse.CardElement;
 import opensoft.search.AdapterListElement;
 import opensoft.search.ListElement;
+import opensoft.util.DragSortRecycler;
 import opensoft.util.SwipeableRecyclerViewTouchListener;
 
 
 public class MainActivity extends ActionBarActivity {
     private CharSequence mTitle="OpenSoft";
-    private NavDrawerItem[] datalist;
+    private List<NavDrawerItem> datalist;
     private DrawerLayout drawerLayout;
     private ListView drawerList;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -68,12 +74,11 @@ public class MainActivity extends ActionBarActivity {
             fragmentTransaction.add(R.id.frame_container, new BrowseFragment());
         }
         fragmentTransaction.commit();
-
-        datalist = data.navtitles;
+        datalist = data.getNavDrawerItems();
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawerList = (ListView) findViewById(R.id.list_slidermenu);
         // Set the adapter for the list view
-        drawerList.setAdapter(new NavDrawerListAdapter(getApplicationContext(), Arrays.asList(datalist)));
+        drawerList.setAdapter(new NavDrawerListAdapter(getApplicationContext(),datalist));
         // Set the list's click listener
         drawerList.setOnItemClickListener(new DrawerItemClickListener());
         mDrawerToggle = new ActionBarDrawerToggle(
@@ -121,6 +126,10 @@ public class MainActivity extends ActionBarActivity {
         if(position==1) {
             fragmentTransaction.replace(R.id.frame_container, new SearchFragment());
             setTitle("Search");
+        }
+        if(position==2){
+            fragmentTransaction.replace(R.id.frame_container, new DemandFragment());
+            setTitle("Demand");
         }
         fragmentTransaction.commit();
 
@@ -247,7 +256,7 @@ public class MainActivity extends ActionBarActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            final View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+            final View rootView = inflater.inflate(R.layout.fragment_search, container, false);
             final RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.listmain);
             recyclerView.setLayoutManager(new LinearLayoutManager(rootView.getContext()));
             recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -338,4 +347,112 @@ public class MainActivity extends ActionBarActivity {
             return rootView;
         }
     }
+    public static class DemandFragment extends Fragment{
+        public DemandFragment(){
+            ;
+        }
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+            final View rootView = inflater.inflate(R.layout.fragment_demand, container, false);
+            final RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.demand_list);
+            final List<CardElement> list=new ArrayList<>();
+            list.add(new CardElement("first","content"));
+            list.add(new CardElement("second","no content"));
+            final AdapterCardElement adapter=new AdapterCardElement(list);
+            recyclerView.setAdapter(adapter);
+            recyclerView.setLayoutManager(new LinearLayoutManager(rootView.getContext()));
+            recyclerView.setItemAnimator(new DefaultItemAnimator());
+            recyclerView.setHasFixedSize(true);
+//            final SwipeRefreshLayout swipeRefreshLayout=(SwipeRefreshLayout) rootView.findViewById(R.id.demand_swipe_refresh_layout);
+//            swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//                @Override
+//                public void onRefresh() {
+//                    swipeRefreshLayout.setRefreshing(true);
+//                    adapter.refreshData();
+//                    recyclerView.swapAdapter(adapter,false);
+//                    swipeRefreshLayout.setRefreshing(false);
+//                }
+//            });
+            DragSortRecycler dragSortRecycler = new DragSortRecycler();
+            //dragSortRecycler.setViewHandleId(R.drawable.ic_launcher); //View you wish to use as the handle
+            dragSortRecycler.setLeftDragArea(160);
+            dragSortRecycler.setOnItemMovedListener(new DragSortRecycler.OnItemMovedListener() {
+                @Override
+                public void onItemMoved(int from, int to) {
+                    System.out.println("onItemMoved " + from + " to " + to);
+                    adapter.swap(from,to);
+                }
+            });
+            SwipeableRecyclerViewTouchListener swipeTouchListener =
+                    new SwipeableRecyclerViewTouchListener(recyclerView,
+                            new SwipeableRecyclerViewTouchListener.SwipeListener() {
+                                @Override
+                                public boolean canSwipe(int position) {
+                                    return true;
+                                }
+
+                                @Override
+                                public void onDismissedBySwipeLeft(RecyclerView recyclerView, int[] reverseSortedPositions) {
+                                    for (int position : reverseSortedPositions) {
+                                        adapter.removeFromList(position);
+                                    }
+                                    adapter.notifyDataSetChanged();
+                                }
+
+                                @Override
+                                public void onDismissedBySwipeRight(RecyclerView recyclerView, int[] reverseSortedPositions) {
+                                    for (int position : reverseSortedPositions) {
+                                        adapter.removeFromList(position);
+                                    }
+                                    adapter.notifyDataSetChanged();
+                                }
+                            });
+            recyclerView.addOnItemTouchListener(swipeTouchListener);
+            recyclerView.addItemDecoration(dragSortRecycler);
+            recyclerView.addOnItemTouchListener(dragSortRecycler);
+            recyclerView.setOnScrollListener(dragSortRecycler.getScrollListener());
+            return rootView;
+        }
+    }
+    public static class ShowDataFragment extends Fragment {
+
+        public String id;
+        public String caption;
+        public String content;
+        public List<String> imgpath;
+//        public ShowDataFragment(){
+//            ;
+//        }
+        public ShowDataFragment() {
+            //get object - fills caption, content
+            caption = "caption";
+            content = "This is the list of machines that have at some point in the past authenticated against your account. The time up to which the authentication is valid and the amount of data that has been downloaded on each machine is shown against the respective machine ID. Note that this information is updated here only once in 5 minutes, so it may not be completely up to date.\n" +
+                    "\n" +
+                    "The download column is showing only your usage for today: 28 Jan, 2015.\n" +
+                    "\n" +
+                    "If you find any machines here that you feel you have not used, someone may have got your password and misused it. Remember that you are responsible for all activity related to your account. If this happens, you should immediately change your password (use the links provided at http://cc.iitm.ac.in/ for this purpose).";
+            imgpath=new ArrayList<String>();
+            imgpath.add("path1");imgpath.add("path2");
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            final View rootView = inflater.inflate(R.layout.fragment_show_content, container, false);
+            TextView txtcaption = (TextView) rootView.findViewById(R.id.content_title);
+            TextView txtcontent = (TextView) rootView.findViewById(R.id.content_data);
+
+            txtcaption.setText(caption);
+            txtcontent.setText(content);
+
+            LinearLayout image_holder = (LinearLayout) rootView.findViewById(R.id.customisable_layout);
+
+            for(String p:imgpath) {
+                ImageView img = new ImageView(rootView.getContext());
+                img.setImageResource(R.drawable.ic_launcher);
+                image_holder.addView(img);
+            }
+            return rootView;
+        }
+    }
 }
+

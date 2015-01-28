@@ -14,4 +14,9 @@ public class CardElement {
         this.content=content;
         icon_ref= R.drawable.ic_launcher;
     }
+    public CardElement(String title,String content,int icon_ref){
+        this.title=title;
+        this.content=content;
+        this.icon_ref= icon_ref;
+    }
 }

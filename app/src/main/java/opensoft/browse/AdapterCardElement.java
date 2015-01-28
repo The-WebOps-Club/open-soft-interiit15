@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import opensoft.com.opensoft.R;
@@ -51,9 +52,13 @@ public class AdapterCardElement extends RecyclerView.Adapter<AdapterCardElement.
                 from(viewGroup.getContext()).
                 inflate(R.layout.card_element, viewGroup, false);
 
-        return new CardElementHolder(itemView);
+        CardElementHolder holder =new CardElementHolder(itemView);
+        return holder;
     }
-
+    public void swap(int pos1,int pos2){
+        Collections.swap(filtered_list,pos1,pos2);
+        notifyDataSetChanged();
+    }
     public static class CardElementHolder extends RecyclerView.ViewHolder {
         protected TextView title;
         protected TextView content;

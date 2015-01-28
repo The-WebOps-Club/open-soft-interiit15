@@ -1,5 +1,9 @@
 package opensoft.search;
 import android.content.Context;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +26,6 @@ public class AdapterListElement extends RecyclerView.Adapter<AdapterListElement.
         private List<ListElement> items;
         public List<ListElement> filtered_items;
         static Context c;
-
     public AdapterListElement(List<ListElement> modelData, Context c) {
             if (modelData == null) {
                 throw new IllegalArgumentException(
@@ -81,13 +84,15 @@ public class AdapterListElement extends RecyclerView.Adapter<AdapterListElement.
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        FragmentManager fragmentManager = getSupportFragmentManager();
+                        FragmentManager fragmentManager = ((ActionBarActivity)c).getSupportFragmentManager();
                         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                        fragmentTransaction.replace(R.id.frame_container, new MainActivity.ShowDataFragment("id"));
-                        getSupportActionBar().setTitle("Browse");
+                        fragmentTransaction.replace(R.id.frame_container, new MainActivity.ShowDataFragment());
+                        ((ActionBarActivity)c).getSupportActionBar().setTitle("Browse");
+                        fragmentTransaction.commit();
                     }
                 });
             }
+
         }
     public void filter(CharSequence charSequence, Context c) {
         //System.out.println(charSequence);
