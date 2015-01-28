@@ -25,12 +25,14 @@ def create_user(request):
 
 @csrf_exempt
 def get_data(request):
-    data = request.GET
+    data = request.POST
     if data['format']:
         sformat = data['format']
+    else:
+        sformat='pb'
     filename = fr.fetch(data['keyword'],sformat)
     if filename:
-        return HttpResponseRedirect(settings.MEDIA_URL+filename)
+        return HttpResponseRedirect(filename)
     else:
         return HttpResponse('Error')
 

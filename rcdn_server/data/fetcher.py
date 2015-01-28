@@ -14,7 +14,7 @@ def fetch(keyword, sformat='pb'):
         return db_entry.filename.url
     else:
         db_entry = Page.objects.create(title=wk.title)
-    if format == 'pb':
+    if sformat == 'pb':
         pg = pb.Page()
         pg.id = db_entry.pk
         pg.title = wk.title
@@ -47,6 +47,6 @@ def fetch(keyword, sformat='pb'):
     db_entry.filename = str(db_entry.pk)+'.'+sformat+'.gz'
     db_entry.save()
     f.close()
-    return str(db_entry.pk)+'.'+sformat+'.gz'
+    return db_entry.filename.url
     #except Exception,e:
     #    return False
