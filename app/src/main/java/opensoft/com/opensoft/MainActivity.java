@@ -1,5 +1,7 @@
 package opensoft.com.opensoft;
 
+import android.app.Fragment;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.support.v4.app.FragmentManager;
 import android.content.res.TypedArray;
@@ -24,6 +26,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -52,10 +55,20 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.nav_bar);
+
+        SharedPreferences pref = getSharedPreferences("mpowered",0);
+
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.frame_container, new BrowseFragment());
+
+        if(pref.getBoolean("register",false)) {
+            fragmentTransaction.add(R.id.frame_container, new RegisterFragment());
+        }
+        else {
+            fragmentTransaction.add(R.id.frame_container, new BrowseFragment());
+        }
         fragmentTransaction.commit();
+
         datalist = data.navtitles;
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawerList = (ListView) findViewById(R.id.list_slidermenu);
@@ -197,6 +210,33 @@ public class MainActivity extends ActionBarActivity {
             return rootView;
         }
         }
+    }
+
+    public static class RegisterFragment extends Fragment {
+        public RegisterFragment() {
+        }
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            final View rootView = inflater.inflate(R.layout.fragment_register, container, false);
+            Button submit_register = (Button) findViewById(R.id.but_register);
+            submit_register.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    //TODO : send data to server
+
+                    SharedPreferences pref;
+                    SharedPreferences.Editor editor;
+                    pref = rootView.getContext().getSharedPreferences("mpowered",0);
+                    editor = pref.edit();
+                    editor.putBoolean("register",true);
+                    editor.commit();
+                }
+            });
+            return rootView;
+        }
+
     }
 
     public static class SearchFragment extends Fragment {
