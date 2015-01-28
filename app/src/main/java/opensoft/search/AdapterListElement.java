@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import android.support.v7.widget.RecyclerView;
 
+import opensoft.com.opensoft.MainActivity;
 import opensoft.com.opensoft.R;
 /**
  * Created by vigneshm on 25/01/15.
@@ -76,6 +77,16 @@ public class AdapterListElement extends RecyclerView.Adapter<AdapterListElement.
                 imgViewIcon = (ImageView) itemView.findViewById(R.id.icon);
                 txtInfo = (TextView) itemView.findViewById(R.id.info);
                 txtTitle = (TextView) itemView.findViewById(R.id.title);
+
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        FragmentManager fragmentManager = getSupportFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.frame_container, new MainActivity.ShowDataFragment("id"));
+                        getSupportActionBar().setTitle("Browse");
+                    }
+                });
             }
         }
     public void filter(CharSequence charSequence, Context c) {

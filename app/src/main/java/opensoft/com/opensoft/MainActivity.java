@@ -25,10 +25,14 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import opensoft.browse.AdapterCardElement;
@@ -153,6 +157,46 @@ public class MainActivity extends ActionBarActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public static class ShowDataFragment extends Fragment {
+
+        public String id;
+        public String caption;
+        public String content;
+        public String imgpath[];
+
+        public ShowDataFragment(String id) {
+            //get object - fills caption, content
+            caption = "caption";
+            content = "This is the list of machines that have at some point in the past authenticated against your account. The time up to which the authentication is valid and the amount of data that has been downloaded on each machine is shown against the respective machine ID. Note that this information is updated here only once in 5 minutes, so it may not be completely up to date.\n" +
+                    "\n" +
+                    "The download column is showing only your usage for today: 28 Jan, 2015.\n" +
+                    "\n" +
+                    "If you find any machines here that you feel you have not used, someone may have got your password and misused it. Remember that you are responsible for all activity related to your account. If this happens, you should immediately change your password (use the links provided at http://cc.iitm.ac.in/ for this purpose).";
+            imgpath=["path1","path2","path3"];
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            final View rootView = inflater.inflate(R.layout.fragment_show_content, container, false);
+            TextView txtcaption = (TextView) findViewById(R.id.content_title);
+            TextView txtcontent = (TextView) findViewById(R.id.content_data);
+
+            txtcaption.setText(caption);
+            txtcontent.setText(content);
+
+            LinearLayout image_holder = (LinearLayout) findViewById(R.id.customisable_layout);
+
+            for(String p:imgpath) {
+                ImageView img = new ImageView(rootView.getContext());
+                img.setImageResource(R.drawable.ic_launcher);
+                image_holder.addView(img);
+            }
+            return rootView;
+        }
+        }
     }
 
     public static class SearchFragment extends Fragment {
