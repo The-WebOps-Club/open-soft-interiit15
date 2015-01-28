@@ -72,7 +72,7 @@ public class UserDatabaseHandler extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void addUser(User user) {
+    public static void addUser(User user) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -96,7 +96,7 @@ public class UserDatabaseHandler extends SQLiteOpenHelper {
     }
 
     // Getting single annotation
-    public User getUser(int l_id) {
+    public static User getUser(int l_id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(TABLE_USER, new String[] {

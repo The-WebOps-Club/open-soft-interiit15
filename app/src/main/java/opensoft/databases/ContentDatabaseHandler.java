@@ -93,7 +93,7 @@ public class ContentDatabaseHandler extends SQLiteOpenHelper {
     }
 
     // Getting single
-    public Content getContent(int l_id) {
+    public static Content getContent(int l_id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(TABLE_CONTENT, new String[] {
@@ -138,7 +138,7 @@ public class ContentDatabaseHandler extends SQLiteOpenHelper {
     }
 
     // Getting single
-    public ArrayList<Content> getAllContent() {
+    public static ArrayList<Content> getAllContent() {
         ArrayList<Content> contentList = new ArrayList<Content>();
 
         String selectQuery = "SELECT  * FROM " + TABLE_CONTENT;

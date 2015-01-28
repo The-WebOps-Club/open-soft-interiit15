@@ -13,6 +13,16 @@ public class User {
     String sName, sPhone,sEmail,sOccupation,sPlace,sCreatedTime,sLastSyncedTime,sDataSize;
     JSONArray saPriority;
 
+    public User(String sName, String sPhone, String sEmail, String sOccupation, String sPlace, String sCreatedTime, String sLastSyncedTime) {
+        this.sName = sName;
+        this.sPhone = sPhone;
+        this.sEmail = sEmail;
+        this.sOccupation = sOccupation;
+        this.sPlace = sPlace;
+        this.sCreatedTime = sCreatedTime;
+        this.sLastSyncedTime = sLastSyncedTime;
+    }
+
     public int getiLocalId() {
         return iLocalId;
     }

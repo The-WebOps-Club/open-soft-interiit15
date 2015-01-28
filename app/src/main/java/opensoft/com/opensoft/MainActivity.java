@@ -38,6 +38,10 @@ import java.util.List;
 
 import opensoft.browse.AdapterCardElement;
 import opensoft.browse.CardElement;
+import opensoft.databases.Content;
+import opensoft.databases.ContentDatabaseHandler;
+import opensoft.databases.User;
+import opensoft.databases.UserDatabaseHandler;
 import opensoft.search.AdapterListElement;
 import opensoft.search.ListElement;
 import opensoft.util.DragSortRecycler;
@@ -45,6 +49,7 @@ import opensoft.util.SwipeableRecyclerViewTouchListener;
 
 
 public class MainActivity extends ActionBarActivity {
+    private URL = "192.168.1.4:8000/";
     private CharSequence mTitle="OpenSoft";
     private List<NavDrawerItem> datalist;
     private DrawerLayout drawerLayout;
@@ -179,14 +184,14 @@ public class MainActivity extends ActionBarActivity {
         public String id;
         public String caption;
         public String content;
-        public String imgpath[];
+        public JSONArray imgpath;
 
-        public ShowDataFragment(String id) {
+        public ShowDataFragment(int id) {
             //get object - fills caption, content
-            JSONObject info;
-            caption = info.getString("sTitle");
-            content =info.getString("sContent");
-            imgpath=info.getJSONArray("saImagePath");
+            Content info = ContentDatabaseHandler.getContent(id);
+            caption = info.getsTitle();
+            content =info.getsContent();
+            imgpath=info.getSaImagePath();
         }
 
         @Override
@@ -219,6 +224,13 @@ public class MainActivity extends ActionBarActivity {
                                  Bundle savedInstanceState) {
             final View rootView = inflater.inflate(R.layout.fragment_register, container, false);
             Button submit_register = (Button) findViewById(R.id.but_register);
+
+            final EditText edit_name = (EditText) findViewById(R.id.edit_name);
+            final EditText edit_phone = (EditText) findViewById(R.id.edit_phone);
+            final EditText edit_place = (EditText) findViewById(R.id.edit_place);
+            final EditText edit_email = (EditText) findViewById(R.id.edit_email);
+            final EditText edit_occupation = (EditText) findViewById(R.id.edit_occupation);
+
             submit_register.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -230,6 +242,18 @@ public class MainActivity extends ActionBarActivity {
                     pref = rootView.getContext().getSharedPreferences("mpowered",0);
                     editor = pref.edit();
                     editor.putBoolean("register",true);
+                    Calendar c = Calendar.getInstance();
+                    new AsyncGet(rootView.getContext(), URL + "user/create?name="+edit_name.getText()+"&phone="+edit_phone.getText()+"&email="+edit_email.getText()+"&occupation="+edit_occupation.getText()+"&region="+edit_place.getText(), new AsyncGet.AsyncResult() {
+                        @Override
+                        public void gotResult(String s) {
+                            JSONObject obj = new JSONObject(s);
+                            if(obj.result) {
+                                Toast.makeText(rootView.getContext(), "Registration successful!", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                    UserDatabaseHandler.addUser(new User(edit_name.getText(),edit_phone.getText(),edit_email.getText(),edit_occupation.getText(),edit_place.getText(),c.getTime().toString(),c.getTime().toString()));
+                    editor.putInt("user_id",0);
                     editor.commit();
                 }
             });
@@ -253,9 +277,11 @@ public class MainActivity extends ActionBarActivity {
             recyclerView.setHasFixedSize(true);
 
             List<ListElement> data= new ArrayList<ListElement>();
-            data.add(new ListElement("first","caption"));
-            data.add(new ListElement("second"));
+            ArrayList<Content> allinfo = ContentDatabaseHandler.getAllContent();
 
+            for(Content inf:allinfo) {
+                data.add(new ListElement(inf.getsTitle(),inf.getsSummary()));
+            }
             final AdapterListElement adapterListElement = new AdapterListElement(data,rootView.getContext());
             recyclerView.setAdapter(adapterListElement);
             this.adapter = adapterListElement;
@@ -292,8 +318,10 @@ public class MainActivity extends ActionBarActivity {
             final View rootView = inflater.inflate(R.layout.fragment_browse, container, false);
             final RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.card_list);
             final List<CardElement> list=new ArrayList<>();
-            list.add(new CardElement("first","content"));
-            list.add(new CardElement("second","no content"));
+
+            ArrayList<Content> allinfo = ContentDatabaseHandler.getAllContent();
+            for(Content inf:allinfo) list.add(new CardElement(inf.getsTitle(), inf.getsContent()));
+
             final SwipeRefreshLayout swipeRefreshLayout=(SwipeRefreshLayout) rootView.findViewById(R.id.browse_swipe_refresh_layout);
             swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
@@ -345,8 +373,16 @@ public class MainActivity extends ActionBarActivity {
             final View rootView = inflater.inflate(R.layout.fragment_demand, container, false);
             final RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.demand_list);
             final List<CardElement> list=new ArrayList<>();
-            list.add(new CardElement("first","content"));
-            list.add(new CardElement("second","no content"));
+
+            SharedPreferences pref = Context.getSharedPreferences("mpowered",0);
+            int id = pref.getInt("user_id",0);
+
+            JSONArray priority_list = UserDatabaseHandler.getUser(id).getSaPriority();
+
+            for(int i=0;i<priority_list.length();i++) {
+                list.add(new CardElement(p.getJSONObject(i).getString("str")));
+            }
+
             final AdapterCardElement adapter=new AdapterCardElement(list);
             recyclerView.setAdapter(adapter);
             recyclerView.setLayoutManager(new LinearLayoutManager(rootView.getContext()));
@@ -400,47 +436,6 @@ public class MainActivity extends ActionBarActivity {
             recyclerView.addItemDecoration(dragSortRecycler);
             recyclerView.addOnItemTouchListener(dragSortRecycler);
             recyclerView.setOnScrollListener(dragSortRecycler.getScrollListener());
-            return rootView;
-        }
-    }
-    public static class ShowDataFragment extends Fragment {
-
-        public String id;
-        public String caption;
-        public String content;
-        public List<String> imgpath;
-//        public ShowDataFragment(){
-//            ;
-//        }
-        public ShowDataFragment() {
-            //get object - fills caption, content
-            caption = "caption";
-            content = "This is the list of machines that have at some point in the past authenticated against your account. The time up to which the authentication is valid and the amount of data that has been downloaded on each machine is shown against the respective machine ID. Note that this information is updated here only once in 5 minutes, so it may not be completely up to date.\n" +
-                    "\n" +
-                    "The download column is showing only your usage for today: 28 Jan, 2015.\n" +
-                    "\n" +
-                    "If you find any machines here that you feel you have not used, someone may have got your password and misused it. Remember that you are responsible for all activity related to your account. If this happens, you should immediately change your password (use the links provided at http://cc.iitm.ac.in/ for this purpose).";
-            imgpath=new ArrayList<String>();
-            imgpath.add("path1");imgpath.add("path2");
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            final View rootView = inflater.inflate(R.layout.fragment_show_content, container, false);
-            TextView txtcaption = (TextView) rootView.findViewById(R.id.content_title);
-            TextView txtcontent = (TextView) rootView.findViewById(R.id.content_data);
-
-            txtcaption.setText(caption);
-            txtcontent.setText(content);
-
-            LinearLayout image_holder = (LinearLayout) rootView.findViewById(R.id.customisable_layout);
-
-            for(String p:imgpath) {
-                ImageView img = new ImageView(rootView.getContext());
-                img.setImageResource(R.drawable.ic_launcher);
-                image_holder.addView(img);
-            }
             return rootView;
         }
     }
