@@ -22,21 +22,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-<<<<<<< HEAD
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
-=======
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
->>>>>>> db746e28b1bb1bdfc7d741925fb3676740a4e0b8
 import android.widget.TextView;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -190,13 +183,10 @@ public class MainActivity extends ActionBarActivity {
 
         public ShowDataFragment(String id) {
             //get object - fills caption, content
-            caption = "caption";
-            content = "This is the list of machines that have at some point in the past authenticated against your account. The time up to which the authentication is valid and the amount of data that has been downloaded on each machine is shown against the respective machine ID. Note that this information is updated here only once in 5 minutes, so it may not be completely up to date.\n" +
-                    "\n" +
-                    "The download column is showing only your usage for today: 28 Jan, 2015.\n" +
-                    "\n" +
-                    "If you find any machines here that you feel you have not used, someone may have got your password and misused it. Remember that you are responsible for all activity related to your account. If this happens, you should immediately change your password (use the links provided at http://cc.iitm.ac.in/ for this purpose).";
-            imgpath=["path1","path2","path3"];
+            JSONObject info;
+            caption = info.getString("sTitle");
+            content =info.getString("sContent");
+            imgpath=info.getJSONArray("saImagePath");
         }
 
         @Override
