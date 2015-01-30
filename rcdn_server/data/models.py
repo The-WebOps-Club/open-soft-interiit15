@@ -20,6 +20,9 @@ class Page(models.Model):
     title       = models.CharField(max_length=100)
     filename    = models.FileField()
 
+    def __unicode__(self):
+        return self.title
+
 from django.contrib.auth.models import User
 
 class UserProfile(models.Model):

@@ -25,7 +25,7 @@ def create_user(request):
 
 @csrf_exempt
 def get_data(request):
-    data = request.POST
+    data = request.GET
     if data['format']:
         sformat = data['format']
     else:
