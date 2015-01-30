@@ -2,7 +2,7 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 // bower:scss
 @import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
 // endbower
-@import url("http://fonts.googleapis.com/css?family=Roboto");
+// @import url("http://fonts.googleapis.com/css?family=Roboto");
 .browsehappy {
   margin: 0.2em 0;
   background: #ccc;
@@ -14,8 +14,9 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 body {
   padding-top: 20px;
   padding-bottom: 20px;
+  text-align: justify;
   font-family: "Roboto";
-  text-transform: uppercase;
+  // text-transform: uppercase;
 }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
@@ -100,4 +101,13 @@ body {
   small{
     color: #2C3E50;
   }
+}
+div.browse-content{
+  a{
+    text-decoration: none;
+  }
+  background-color: #eee;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 5px;
 }

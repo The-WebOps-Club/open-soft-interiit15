@@ -14,4 +14,10 @@ angular.module('villagerHelpApp')
       'AngularJS',
       'Karma'
     ];
+    $scope.topics = [];
+    localforage.getItem('topics').then(function(topics){
+    	console.log(topics)
+    	$scope.topics = topics;
+    	$scope.$apply();
+    })
   });

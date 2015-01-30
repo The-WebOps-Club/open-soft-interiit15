@@ -21,7 +21,7 @@ class Page(models.Model):
     filename    = models.FileField()
 
     def __unicode__(self):
-        return self.title
+        return self.title or str(self.pk)
 
 from django.contrib.auth.models import User
 

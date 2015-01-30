@@ -3,8 +3,18 @@
     <form class="form">
       <div class="form-group">
         <label class="text-center">Demand</label>
-        <input type="text" name="demand" class="form-control">
+        <input type="text" name="demand" ng-model="keyword" class="form-control"><br>	
+        <input type="button" ng-click="fetch()" class="btn btn-success form-control" value="Fetch">
       </div>
     </form>
+    <div class="panel">
+    	<div class="panel-heading panel-success">
+    		<h2>{{data.title}}</h2>
+    		<p>{{data.summary}}</p>
+    	</div>
+    	<div class="panlbody">
+    		<p>{{data.content}}</p>
+    	</div>
+    </div>
   </div>
 </div>
